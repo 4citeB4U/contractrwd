@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Agreement - Digital Signing</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --accent-blue: #60a5fa;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --white: #ffffff;
+            --success-green: #10b981;
+            --error-red: #ef4444;
+            --warning-orange: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--light-blue) 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: var(--primary-blue);
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .header p {
+            color: var(--gray-600);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            color: var(--gray-800);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--light-blue);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--gray-700);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-input:hover {
+            border-color: var(--gray-300);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contract-preview {
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--light-blue) 100%);
+            border: 2px solid var(--gray-200);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            max-height: 500px;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .contract-title {
+            color: var(--primary-blue);
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--accent-blue);
+            padding-bottom: 0.75rem;
+        }
+
+        .contract-intro {
+            background: linear-gradient(135deg, var(--light-blue), #e0f2fe);
+            padding: 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .contract-section {
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary-blue);
+            padding-left: 1.25rem;
+            background: var(--white);
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem;
+        }
+
+        .section-content {
+            color: var(--gray-700);
+            line-height: 1.7;
+        }
+
+        .section-content ul {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content strong {
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+
+        .signature-section {
+            border: 2px dashed var(--gray-300);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--gray-50), var(--white));
+            margin: 1.5rem 0;
+        }
+
+        .signature-section h3 {
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .signature-method-toggle {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .signature-method-toggle label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .signature-method-toggle input[type="radio"] {
+            transform: scale(1.2);
+            accent-color: var(--primary-blue);
+        }
+
+        .signature-pad {
+            border: 2px solid var(--gray-300);
+            border-radius: 12px;
+            background: var(--white);
+            cursor: crosshair;
+            width: 100%;
+            height: 200px;
+            touch-action: none;
+        }
+
+        .signature-controls {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .typed-signature-input {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--gray-300);
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        .btn {
+            padding: 0.875rem 1.75rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-300);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green), #059669);
+            color: var(--white);
+            font-size: 1.1rem;
+            padding: 1.25rem 2.5rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-glow {
+            animation: glow 2s ease-in-out infinite alternate;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+            to {
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 40px rgba(59, 130, 246, 0.4);
+            }
+        }
+
+        .choice-buttons {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            border: 2px solid var(--success-green);
+            border-radius: 15px;
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            text-align: center;
+        }
+
+        .choice-buttons h3 {
+            color: var(--success-green);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .choice-buttons p {
+            color: var(--gray-700);
+            margin-bottom: 1.5rem;
+        }
+
+        .choice-buttons .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .agreement-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .agreement-checkbox input[type="checkbox"] {
+            margin-top: 0.25rem;
+            transform: scale(1.3);
+            accent-color: var(--primary-blue);
+        }
+
+        .agreement-checkbox label {
+            color: var(--gray-700);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .progress-container {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            color: var(--gray-600);
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            color: var(--primary-blue);
+            font-weight: 600;
+            background: var(--light-blue);
+            transform: scale(1.02);
+        }
+
+        .step.completed {
+            color: var(--success-green);
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        }
+
+        .step i {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .step.active i {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .step.completed i {
+            background: var(--success-green);
+            color: var(--white);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .success-message i {
+            font-size: 4rem;
+            color: var(--success-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .success-message h2 {
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .success-message p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .signature-controls {
+                flex-direction: column;
+            }
+            
+            .signature-method-toggle {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-file-signature"></i> Web Development Agreement</h1>
+            <p>Professional code transfer & development contract with electronic signature</p>
+        </div>        
+        <!-- Form Container -->
+        <div id="form-container">
+            <!-- Personal Information Card -->
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-user"></i> Your Information</h2>
+                <form id="contract-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company Name/Entity (Optional)</label>
+                            <input type="text" id="company" name="company" class="form-input" placeholder="Business or organization name, if applicable">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Contract Agreement Card -->
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-file-contract"></i> Contract Agreement</h2>
+                <div class="contract-preview" id="contract-preview">
+                    <h4 class="contract-title">WEB DEVELOPMENT & CODE ASSIGNMENT AGREEMENT</h4>
+                    <p class="contract-intro">This Agreement is entered into as of the date of electronic signature ("Effective Date"), by and between:<br><br><strong>Developer:</strong> Leonard J. Lee, d/b/a Rapid Web Development (hereinafter referred to as "Developer"), with primary email contact: agentlee@rapidwebdevelop.com and business phone: (414) 626-9992.<br><br><strong>Client:</strong> The client identified in this document (hereinafter referred to as "Client").</p>
+                    
+                    <div class="contract-section">
+                        <h5 class="section-title">1. SCOPE OF WORK</h5>
+                        <div class="section-content">The Developer agrees to create and deliver a custom web application (hereinafter, the "Project") according to the Client's specified requirements. This includes:<ul><li>Full front-end website design and development.</li><li>GitHub repository setup and source code configuration.</li><li>Transfer of all associated project files in downloadable format.</li><li>Technical support during initial deployment.</li></ul></div>
+                    </div>
+                    
+                    <div class="contract-section">
+                        <h5 class="section-title">2. OWNERSHIP & INTELLECTUAL PROPERTY RIGHTS</h5>
+                        <div class="section-content"><ul><li>Upon full completion of the Project and receipt of agreed compensation, the Developer hereby <strong>assigns all rights, title, and interest</strong> in the Project source code and materials to the Client.</li><li>The Client shall hold <strong>exclusive, irrevocable ownership rights</strong> to the code and assets delivered, including the right to modify, distribute, or commercialize the code, provided that such use does not infringe upon third-party rights or violate applicable laws.</li></ul></div>
+                    </div>
+                    
+                    <div class="contract-section">
+                        <h5 class="section-title">3. DEVELOPER RIGHTS & RETAINED COPIES</h5>
+                        <div class="section-content"><ul><li>The Developer may retain a copy of the Project files for <strong>archival and backup purposes only</strong>.</li><li>Such copies shall not be reused, redistributed, repurposed, or re-sold in any form without express written authorization from the Client.</li></ul></div>
+                    </div>
+                    
+                    <div class="contract-section">
+                        <h5 class="section-title">4. COMPENSATION</h5>
+                        <div class="section-content">The Client agrees to compensate the Developer as agreed upon separately, which may include monetary payment or barter exchange of equivalent value.</div>
+                    </div>
+                    
+                    <div class="contract-section">
+                        <h5 class="section-title">5. DELIVERY & TERMINATION</h5>
+                        <div class="section-content"><ul><li>Final files shall be delivered via GitHub repository and optional ZIP download.</li><li>This Agreement is deemed fulfilled upon delivery, with no ongoing obligations unless separately contracted.</li></ul></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Additional Notes (Optional)</label>
+                    <textarea id="notes" name="notes" class="form-input" placeholder="Enter any specific details, modifications, or clarifications about this agreement..."></textarea>
+                </div>
+                
+                <div class="agreement-checkbox">
+                    <input type="checkbox" id="agree" name="agree" required>
+                    <label for="agree">I have read and agree to the terms and conditions outlined in this Web Development & Code Assignment Agreement. I understand that checking this box constitutes a legal signature confirming that I acknowledge and agree to all terms set forth in the agreement.</label>
+                </div>
+            </div>
+            
+            <!-- Signature Card -->
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-signature"></i> Signature</h2>
+                <div class="signature-section">
+                    <h3>Choose your signature method:</h3>
+                    
+                    <!-- Signature Method Toggle -->
+                    <div class="signature-method-toggle">
+                        <label>
+                            <input type="radio" name="signature-method" value="draw" id="draw-signature" checked>
+                            Draw Signature
+                        </label>
+                        <label>
+                            <input type="radio" name="signature-method" value="type" id="type-signature">
+                            Type Signature
+                        </label>
+                    </div>
+                    
+                    <!-- Draw Signature Section -->
+                    <div id="draw-signature-section">
+                        <p>Please draw your signature below using your mouse or touchscreen:</p>
+                        <canvas id="signature-pad" class="signature-pad"></canvas>
+                        <div class="signature-controls">
+                            <button type="button" id="clear-signature" class="btn btn-secondary">
+                                <i class="fas fa-eraser"></i> Clear Signature
+                            </button>
+                            <button type="button" id="undo-signature" class="btn btn-secondary">
+                                <i class="fas fa-undo"></i> Undo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Type Signature Section -->
+                    <div id="type-signature-section" style="display: none;">
+                        <p>Type your full name as your signature:</p>
+                        <input type="text" id="typed-signature" class="typed-signature-input" placeholder="Type your full name here">
+                        <p style="font-size: 0.9rem; color: var(--gray-600); margin-top: 0.75rem;">By typing your name above, you agree this constitutes your legal electronic signature.</p>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="signature-controls" style="margin-top: 2rem;">
+                    <button type="button" id="download-pdf" class="btn btn-outline">
+                        <i class="fas fa-download"></i> Download PDF Only
+                    </button>
+                    <button type="button" id="submit-button" class="btn btn-success">
+                        <i class="fas fa-paper-plane"></i> Sign & Continue
+                    </button>
+                </div>
+                
+                <!-- Choice Buttons (shown after signing) -->
+                <div id="choice-buttons" class="choice-buttons">
+                    <h3>Contract Signed Successfully!</h3>
+                    <p>Choose how you'd like to proceed:</p>
+                    <div class="btn-group">
+                        <button type="button" id="choice-download" class="btn btn-outline btn-glow">
+                            <i class="fas fa-download"></i> Download PDF Now
+                        </button>
+                        <button type="button" id="choice-email" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i> Send via Email
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Processing Container -->
+        <div id="progress-container" class="progress-container" style="display: none;">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-cogs"></i> Processing Your Contract</h2>
+                
+                <div class="progress-steps">
+                    <div class="step active" id="step-generate">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Generating PDF document</span>
+                    </div>
+                    
+                    <div class="step" id="step-client-email">
+                        <i class="fas fa-envelope"></i>
+                        <span>Sending copy to your email</span>
+                    </div>
+                    
+                    <div class="step" id="step-developer-email">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <span>Notifying developer</span>
+                    </div>
+                    
+                    <div class="step" id="step-storage">
+                        <i class="fas fa-database"></i>
+                        <span>Saving document locally</span>
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                
+                <p style="color: var(--gray-600); margin-top: 1rem;">Please wait while we process your contract...</p>
+            </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div id="success-message" class="success-message" style="display: none;">
+            <div class="card">
+                <i class="fas fa-check-circle"></i>
+                <h2>Web Development Agreement Signed!</h2>
+                <p>A copy of the signed agreement has been sent to your email.</p>
+                <p>Leonard will be in touch shortly to begin your project!</p>
+                
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button type="button" id="download-copy" class="btn btn-outline">
+                        <i class="fas fa-download"></i> Download Another Copy
+                    </button>
+                    <button type="button" id="create-new" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create New Contract
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing app...');
+            
+            // DOM Elements
+            const formContainer = document.getElementById('form-container');
+            const progressContainer = document.getElementById('progress-container');
+            const successMessage = document.getElementById('success-message');
+            const contractForm = document.getElementById('contract-form');
+            const submitButton = document.getElementById('submit-button');
+            const downloadPdfButton = document.getElementById('download-pdf');
+            const downloadCopyButton = document.getElementById('download-copy');
+            const createNewButton = document.getElementById('create-new');
+            const choiceButtons = document.getElementById('choice-buttons');
+            const choiceDownload = document.getElementById('choice-download');
+            const choiceEmail = document.getElementById('choice-email');
+            
+            // Signature Elements
+            const signaturePadElement = document.getElementById('signature-pad');
+            const clearButton = document.getElementById('clear-signature');
+            const undoButton = document.getElementById('undo-signature');
+            const drawSignatureRadio = document.getElementById('draw-signature');
+            const typeSignatureRadio = document.getElementById('type-signature');
+            const drawSignatureSection = document.getElementById('draw-signature-section');
+            const typeSignatureSection = document.getElementById('type-signature-section');
+            const typedSignatureInput = document.getElementById('typed-signature');
+            
+            // User Input Elements
+            const fullNameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const companyInput = document.getElementById('company');
+            const notesInput = document.getElementById('notes');
+            const agreeCheckbox = document.getElementById('agree');
+            
+            // Progress Elements
+            const progressBar = document.getElementById('progress-bar');
+            const stepGenerate = document.getElementById('step-generate');
+            const stepClientEmail = document.getElementById('step-client-email');
+            const stepDeveloperEmail = document.getElementById('step-developer-email');
+            const stepStorage = document.getElementById('step-storage');
+            
+            // Initialize Signature Pad
+            let sigPad;
+            
+            function initializeSignaturePad() {
+                console.log('Initializing signature pad...');
+                
+                // Check if SignaturePad is available
+                if (typeof SignaturePad === 'undefined') {
+                    console.error('SignaturePad library not loaded');
+                    return;
+                }
+                
+                // Resize canvas to fit container
+                function resizeCanvas() {
+                    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                    signaturePadElement.width = signaturePadElement.offsetWidth * ratio;
+                    signaturePadElement.height = signaturePadElement.offsetHeight * ratio;
+                    signaturePadElement.getContext("2d").scale(ratio, ratio);
+                    
+                    if (sigPad) {
+                        sigPad.clear(); // Clear the canvas
+                    }
+                }
+                
+                // Initialize the signature pad
+                sigPad = new SignaturePad(signaturePadElement, {
+                    backgroundColor: 'rgb(255, 255, 255)',
+                    penColor: 'rgb(0, 0, 0)',
+                    velocityFilterWeight: 0.7,
+                    minWidth: 1,
+                    maxWidth: 3,
+                    throttle: 16,
+                    minDistance: 5
+                });
+                
+                // Set up canvas sizing
+                resizeCanvas();
+                
+                // Handle window resize
+                window.addEventListener("resize", resizeCanvas);
+                
+                console.log('Signature pad initialized successfully');
+            }
+            
+            // Initialize signature pad when DOM is ready
+            setTimeout(initializeSignaturePad, 100);
+            
+            // Toggle between signature methods
+            drawSignatureRadio.addEventListener('change', function() {
+                console.log('Draw signature selected');
+                if (this.checked) {
+                    drawSignatureSection.style.display = 'block';
+                    typeSignatureSection.style.display = 'none';
+                }
+            });
+            
+            typeSignatureRadio.addEventListener('change', function() {
+                console.log('Type signature selected');
+                if (this.checked) {
+                    drawSignatureSection.style.display = 'none';
+                    typeSignatureSection.style.display = 'block';
+                }
+            });
+            
+            // Clear signature button
+            clearButton.addEventListener('click', function() {
+                console.log('Clearing signature');
+                if (sigPad) {
+                    sigPad.clear();
+                }
+            });
+            
+            // Undo signature button
+            undoButton.addEventListener('click', function() {
+                console.log('Undoing signature');
+                if (sigPad) {
+                    const data = sigPad.toData();
+                    if (data && data.length > 0) {
+                        data.pop(); // Remove the last stroke
+                        sigPad.fromData(data);
+                    }
+                }
+            });
+            
+            // Generate a typed signature image
+            function generateTypedSignature(name) {
+                console.log('Generating typed signature for:', name);
+                
+                // Create a temporary canvas
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas size
+                canvas.width = 600;
+                canvas.height = 200;
+                
+                // Clear canvas
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Configure text style
+                ctx.fillStyle = 'black';
+                ctx.font = '60px "Brush Script MT", cursive';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // Draw text
+                ctx.fillText(name, canvas.width / 2, canvas.height / 2);
+                
+                // Return as data URL
+                return canvas.toDataURL('image/png');
+            }
+            
+            // PDF Generation Function
+            async function generatePDF(formData) {
+                console.log('Generating PDF...');
+                
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF();
+                    
+                    // Set document properties
+                    doc.setProperties({
+                        title: 'Web Development Agreement',
+                        subject: 'Development Contract',
+                        author: 'Rapid Web Development',
+                        creator: 'Contract Signing App'
+                    });
+                    
+                    // Add header
+                    doc.setFillColor(30, 64, 175); // Primary blue
+                    doc.rect(0, 0, 210, 25, 'F');
+                    
+                    doc.setFontSize(18);
+                    doc.setTextColor(255, 255, 255); // White
+                    doc.text('WEB DEVELOPMENT AGREEMENT', 105, 15, { align: 'center' });
+                    
+                    // Add date
+                    doc.setFontSize(10);
+                    const today = new Date().toLocaleDateString();
+                    doc.text(`Generated on: ${today}`, 105, 20, { align: 'center' });
+                    
+                    // Add client information
+                    doc.setFontSize(14);
+                    doc.setTextColor(30, 64, 175); // Primary blue
+                    doc.text('CLIENT INFORMATION', 20, 40);
+                    
+                    doc.setDrawColor(30, 64, 175);
+                    doc.line(20, 42, 120, 42);
+                    
+                    doc.setFontSize(11);
+                    doc.setTextColor(31, 41, 55); // Dark gray
+                    
+                    let y = 50;
+                    doc.text(`Full Name: ${formData.fullName}`, 20, y);
+                    y += 8;
+                    doc.text(`Email Address: ${formData.email}`, 20, y);
+                    y += 8;
+                    doc.text(`Phone Number: ${formData.phone}`, 20, y);
+                    
+                    if (formData.company) {
+                        y += 8;
+                        doc.text(`Company/Entity: ${formData.company}`, 20, y);
+                    }
+                    
+                    // Add contract content
+                    y += 20;
+                    doc.setFontSize(14);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text('AGREEMENT TERMS', 20, y);
+                    
+                    // Add simplified contract text
+                    y += 15;
+                    doc.setFontSize(10);
+                    doc.setTextColor(31, 41, 55);
+                    
+                    const contractText = `This Web Development & Code Assignment Agreement is entered into between Leonard J. Lee (Developer) and ${formData.fullName} (Client).
+
+The Developer agrees to provide web development services including custom application development, code transfer, and technical support as outlined in the full agreement terms displayed in the signing interface.
+
+Upon completion and payment, all rights to the developed code and materials transfer to the Client.`;
+                    
+                    const splitText = doc.splitTextToSize(contractText, 170);
+                    doc.text(splitText, 20, y);
+                    y += splitText.length * 5 + 15;
+                    
+                    // Add additional notes if provided
+                    if (formData.notes) {
+                        doc.setFontSize(12);
+                        doc.setTextColor(30, 64, 175);
+                        doc.text('ADDITIONAL NOTES', 20, y);
+                        
+                        y += 10;
+                        doc.setFontSize(10);
+                        doc.setTextColor(31, 41, 55);
+                        const splitNotes = doc.splitTextToSize(formData.notes, 170);
+                        doc.text(splitNotes, 20, y);
+                        
+                        y += splitNotes.length * 5 + 15;
+                    }
+                    
+                    // Add signature
+                    doc.setFontSize(12);
+                    doc.setTextColor(30, 64, 175);
+                    doc.text('ELECTRONIC SIGNATURE', 20, y);
+                    
+                    y += 15;
+                    // Add signature image
+                    if (formData.signatureDataUrl) {
+                        doc.addImage(formData.signatureDataUrl, 'PNG', 20, y, 80, 30);
+                    }
+                    
+                    y += 40;
+                    // Signature line
+                    doc.setDrawColor(200, 200, 200);
+                    doc.line(20, y, 100, y);
+                    
+                    doc.setFontSize(10);
+                    doc.setTextColor(31, 41, 55);
+                    doc.text(`Signature: ${formData.fullName}`, 20, y + 7);
+                    doc.text(`Date: ${today}`, 20, y + 14);
+                    
+                    console.log('PDF generated successfully');
+                    return doc;
+                    
+                } catch (error) {
+                    console.error('Error generating PDF:', error);
+                    throw error;
+                }
+            }
+            
+            // Download PDF function
+            async function downloadPDF(formData) {
+                try {
+                    console.log('Starting PDF download...');
+                    const doc = await generatePDF(formData);
+                    const fileName = `${formData.fullName.replace(/\s+/g, '_')}_WebDev_Agreement_${new Date().toISOString().split('T')[0]}.pdf`;
+                    
+                    // Force the browser to download the file
+                    doc.save(fileName);
+                    
+                    console.log('PDF downloaded successfully:', fileName);
+                    return true;
+                } catch (error) {
+                    console.error('Error downloading PDF:', error);
+                    alert('Error generating PDF. Please try again.');
+                    return false;
+                }
+            }
+            
+            // Send email via EmailJS (mock function for now)
+            async function sendEmail(formData, pdfBase64) {
+                try {
+                    console.log('Sending email to:', formData.email);
+                    
+                    // This would be replaced with actual EmailJS implementation
+                    // emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                    //     to_name: formData.fullName,
+                    //     to_email: formData.email,
+                    //     from_name: 'Leonard J. Lee',
+                    //     pdf_attachment: pdfBase64
+                    // });
+                    
+                    // Simulate success
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    console.log('Email sent successfully');
+                    return true;
+                } catch (error) {
+                    console.error('Error sending email:', error);
+                    return false;
+                }
+            }
+            
+            // Simulate progress animation
+            function animateProgress() {
+                let progress = 0;
+                progressBar.style.width = '0%';
+                
+                // Reset steps
+                stepGenerate.classList.add('active');
+                stepClientEmail.classList.remove('active', 'completed');
+                stepDeveloperEmail.classList.remove('active', 'completed');
+                stepStorage.classList.remove('active', 'completed');
+                
+                return new Promise((resolve) => {
+                    const interval = setInterval(() => {
+                        progress += 2;
+                        progressBar.style.width = `${progress}%`;
+                        
+                        // Update steps based on progress
+                        if (progress >= 25) {
+                            stepGenerate.classList.remove('active');
+                            stepGenerate.classList.add('completed');
+                            stepClientEmail.classList.add('active');
+                        }
+                        
+                        if (progress >= 50) {
+                            stepClientEmail.classList.remove('active');
+                            stepClientEmail.classList.add('completed');
+                            stepDeveloperEmail.classList.add('active');
+                        }
+                        
+                        if (progress >= 75) {
+                            stepDeveloperEmail.classList.remove('active');
+                            stepDeveloperEmail.classList.add('completed');
+                            stepStorage.classList.add('active');
+                        }
+                        
+                        if (progress >= 100) {
+                            stepStorage.classList.remove('active');
+                            stepStorage.classList.add('completed');
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }, 50);
+                });
+            }
+            
+            // Download PDF Only button (direct download without choice UI)
+            downloadPdfButton.addEventListener('click', async function() {
+                console.log('Download PDF button clicked');
+                
+                // Validate required fields
+                if (!fullNameInput.value || !emailInput.value || !phoneInput.value) {
+                    alert('Please fill in all required fields before downloading the PDF.');
+                    return;
+                }
+                
+                // Get signature data URL
+                let signatureDataUrl;
+                const isDrawMethod = drawSignatureRadio.checked;
+                
+                if (isDrawMethod) {
+                    if (sigPad && !sigPad.isEmpty()) {
+                        signatureDataUrl = sigPad.toDataURL();
+                    } else {
+                        if (!confirm("You haven't drawn a signature yet. Do you want to download without a signature?")) {
+                            return;
+                        }
+                        signatureDataUrl = null;
+                    }
+                } else {
+                    if (typedSignatureInput.value.trim()) {
+                        signatureDataUrl = generateTypedSignature(typedSignatureInput.value.trim());
+                    } else {
+                        if (!confirm("You haven't typed a signature yet. Do you want to download without a signature?")) {
+                            return;
+                        }
+                        signatureDataUrl = null;
+                    }
+                }
+                
+                // Prepare form data
+                const formData = {
+                    fullName: fullNameInput.value,
+                    email: emailInput.value,
+                    phone: phoneInput.value,
+                    company: companyInput.value,
+                    notes: notesInput.value,
+                    agreed: agreeCheckbox.checked,
+                    signatureDataUrl: signatureDataUrl,
+                    signatureMethod: isDrawMethod ? 'drawn' : 'typed'
+                };
+                
+                // Download PDF
+                await downloadPDF(formData);
+            });
+            
+            // Submit form handler (now just validates and shows choice)
+            submitButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Submit button clicked');
+                
+                // Validate form
+                if (!fullNameInput.value || !emailInput.value || !phoneInput.value) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                if (!agreeCheckbox.checked) {
+                    alert('You must agree to the terms and conditions to proceed.');
+                    return;
+                }
+                
+                // Validate signature based on selected method
+                const isDrawMethod = drawSignatureRadio.checked;
+                
+                if (isDrawMethod && (!sigPad || sigPad.isEmpty())) {
+                    alert('Please draw your signature before submitting the form.');
+                    return;
+                }
+                
+                if (!isDrawMethod && !typedSignatureInput.value.trim()) {
+                    alert('Please type your name as your signature before submitting the form.');
+                    return;
+                }
+                
+                // Show choice buttons
+                choiceButtons.style.display = 'block';
+                submitButton.style.display = 'none';
+                downloadPdfButton.style.display = 'none';
+                
+                // Scroll to choice buttons
+                choiceButtons.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Download copy from success screen
+            downloadCopyButton.addEventListener('click', async function() {
+                const formData = {
+                    fullName: fullNameInput.value,
+                    email: emailInput.value,
+                    phone: phoneInput.value,
+                    company: companyInput.value,
+                    notes: notesInput.value,
+                    agreed: true,
+                    signatureDataUrl: drawSignatureRadio.checked ? 
+                        (sigPad ? sigPad.toDataURL() : null) : 
+                        generateTypedSignature(typedSignatureInput.value.trim()),
+                    signatureMethod: drawSignatureRadio.checked ? 'drawn' : 'typed'
+                };
+                
+                await downloadPDF(formData);
+            });
+            
+            // Choice button handlers
+            choiceDownload.addEventListener('click', async function() {
+                console.log('Download choice selected');
+                
+                // Get signature data
+                const isDrawMethod = drawSignatureRadio.checked;
+                let signatureDataUrl;
+                
+                if (isDrawMethod) {
+                    signatureDataUrl = sigPad.toDataURL();
+                } else {
+                    signatureDataUrl = generateTypedSignature(typedSignatureInput.value.trim());
+                }
+                
+                // Prepare form data
+                const formData = {
+                    fullName: fullNameInput.value,
+                    email: emailInput.value,
+                    phone: phoneInput.value,
+                    company: companyInput.value,
+                    notes: notesInput.value,
+                    agreed: agreeCheckbox.checked,
+                    signatureDataUrl: signatureDataUrl,
+                    signatureMethod: isDrawMethod ? 'drawn' : 'typed'
+                };
+                
+                // Download PDF
+                const success = await downloadPDF(formData);
+                if (success) {
+                    // Show success message
+                    formContainer.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    
+                    // Update success message text
+                    successMessage.querySelector('h2').textContent = 'Contract Downloaded Successfully!';
+                    successMessage.querySelector('p').textContent = 'Your signed agreement has been downloaded to your device.';
+                }
+            });
+            
+            choiceEmail.addEventListener('click', async function() {
+                console.log('Email choice selected');
+                
+                // Get signature data
+                const isDrawMethod = drawSignatureRadio.checked;
+                let signatureDataUrl;
+                
+                if (isDrawMethod) {
+                    signatureDataUrl = sigPad.toDataURL();
+                } else {
+                    signatureDataUrl = generateTypedSignature(typedSignatureInput.value.trim());
+                }
+                
+                // Prepare form data
+                const formData = {
+                    fullName: fullNameInput.value,
+                    email: emailInput.value,
+                    phone: phoneInput.value,
+                    company: companyInput.value,
+                    notes: notesInput.value,
+                    agreed: agreeCheckbox.checked,
+                    signatureDataUrl: signatureDataUrl,
+                    signatureMethod: isDrawMethod ? 'drawn' : 'typed'
+                };
+                
+                // Show progress container
+                formContainer.style.display = 'none';
+                progressContainer.style.display = 'block';
+                
+                try {
+                    // Start progress animation
+                    animateProgress();
+                    
+                    // Generate PDF and send email
+                    const doc = await generatePDF(formData);
+                    const pdfBase64 = doc.output('datauristring');
+                    
+                    // Send email (this is mocked for now)
+                    await sendEmail(formData, pdfBase64);
+                    
+                    // Delay to show the full progress animation
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    // Show success message
+                    progressContainer.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    
+                    // Update success message text
+                    successMessage.querySelector('h2').textContent = 'Contract Emailed Successfully!';
+                    successMessage.querySelector('p').textContent = 'A copy of the signed agreement has been sent to your email.';
+                    
+                } catch (error) {
+                    console.error('Error processing contract:', error);
+                    alert('There was an error sending your contract. Please try again.');
+                    
+                    // Go back to form
+                    progressContainer.style.display = 'none';
+                    formContainer.style.display = 'block';
+                    choiceButtons.style.display = 'block';
+                    submitButton.style.display = 'none';
+                    downloadPdfButton.style.display = 'none';
+                }
+            });
+            
+            // Create new contract button
+            createNewButton.addEventListener('click', function() {
+                // Reset form
+                contractForm.reset();
+                if (sigPad) {
+                    sigPad.clear();
+                }
+                typedSignatureInput.value = '';
+                
+                // Reset UI state
+                choiceButtons.style.display = 'none';
+                submitButton.style.display = 'inline-flex';
+                downloadPdfButton.style.display = 'inline-flex';
+                
+                // Show form again
+                successMessage.style.display = 'none';
+                formContainer.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<<<<<<< HEAD
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent Lee Digital Business Card</title>
+
+  <!-- SEO & OpenGraph -->
+  <meta name="description" content="Agent Lee - Artist Empowerment Platform - Digital Business Card" />
+  <meta name="keywords" content="Agent Lee, Artist Empowerment, RAPIDWEBDEVELOP, Milwaukee" />
+  <meta name="author" content="Agent Lee" />
+  <meta property="og:title" content="Agent Lee - Artist Empowerment Platform" />
+  <meta property="og:description" content="Connect with Agent Lee from RAPIDWEBDEVELOP.COM" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://rapidwebdevelop.com/agentlee" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #0a0a23;
+      --secondary-color: #1e293b;
+      --accent-color: #FFD700;
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --text-muted: rgba(255, 255, 255, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --neon-glow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.4);
+      --red-button: #e11d48;
+      --red-button-hover: #f43f5e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--primary-color);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('1i0ubl0o47.png') no-repeat center center;
+      background-size: cover;
+      opacity: 0.85;
+      z-index: -2;
+    }
+
+    #container {
+      display: flex;
+      gap: 30px;
+      max-width: 1200px;
+      width: 95%;
+      padding: 20px;
+      margin: 10px auto 180px auto;
+      position: relative;
+      animation: fadeIn 1.2s ease-out forwards;
+      justify-content: center;
+    }
+
+    /* Business Card Image */
+    .card-container {
+      width: 450px;
+      height: 600px;
+      position: relative;
+      perspective: 1000px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    #business-card-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      object-fit: contain;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      transform-style: preserve-3d;
+    }
+
+    .card-shine {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 25%, 
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .card-container:hover #business-card-img {
+      transform: rotateY(10deg) rotateX(5deg);
+      box-shadow: 
+        -15px 20px 30px -10px rgba(0, 0, 0, 0.8),
+        0 0 20px 0px var(--accent-color);
+    }
+
+    .card-container:hover .card-shine {
+      opacity: 1;
+      animation: cardShine 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes cardShine {
+      from { opacity: 0.3; transform: translateX(-100%); }
+      to { opacity: 0; transform: translateX(100%); }
+    }
+
+    /* Agent Lee card container */
+    #agent-card {
+      width: 460px;
+      height: 600px;
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      user-select: none;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      transform: translateY(20px);
+    }
+
+    #agent-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, 
+        rgba(255, 215, 0, 0.1) 0%,
+        transparent 15%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #agent-card.dragging {
+      cursor: grabbing;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Header always visible at top */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 20px;
+      background-color: rgba(15, 23, 42, 0.9);
+      cursor: grab;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 10;
+    }
+
+    .card-header::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      background-color: var(--accent-color);
+      box-shadow: var(--neon-glow);
+    }
+
+    .avatar-img {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      border: 2px solid var(--accent-color);
+      object-fit: cover;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .agent-details h3 {
+      color: var(--accent-color);
+      margin: 0 0 5px 0;
+      font-size: 20px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+    }
+
+    .agent-details p {
+      color: var(--text-secondary);
+      margin: 0;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #10b981;
+      margin-right: 8px;
+      position: relative;
+    }
+
+    .status-indicator::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      background-color: rgba(16, 185, 129, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    /* Questions container scrollable */
+    #questions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 20px;
+      overflow-y: auto;
+      flex-grow: 1;
+      background: rgba(20, 30, 49, 0.6);
+      position: relative;
+    }
+
+    #questions::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(to bottom, 
+        rgba(20, 30, 49, 0.9) 0%,
+        rgba(20, 30, 49, 0) 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .question-btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      color: white;
+      font-size: 14px;
+      padding: 14px 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .question-btn i {
+      color: var(--accent-color);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .question-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        rgba(255, 255, 255, 0) 100%);
+      transform: translateX(-100%);
+      transition: transform 0.7s ease;
+    }
+
+    .question-btn:hover {
+      background: rgba(44, 55, 75, 0.9);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .question-btn:hover::before {
+      transform: translateX(100%);
+    }
+
+    .question-btn.active {
+      background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(30, 41, 59, 0.9));
+      border-color: var(--accent-color);
+    }
+
+    /* Bottom control buttons */
+    .control-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 15px;
+      background-color: rgba(15, 23, 42, 0.9);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      flex-shrink: 0;
+    }
+
+    button {
+      padding: 12px 8px;
+      border: none;
+      border-radius: 11px;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      flex: 1 1 120px;
+      min-width: 90px;
+    }
+
+    button i {
+      font-size: 15px;
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0) 100%);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+
+    button:hover::after {
+      transform: translateX(100%);
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .stop-btn   { background: #dc2626; }
+    .finish-btn { background: #ca8a04; }
+    .email-btn  { background: #4f46e5; }
+    .phone-btn  { background: #0d9488; }
+    .text-btn   { background: #d97706; }
+    .save-btn   { background: #059669; }
+    .nearby-btn { background: #8b5cf6; }
+    .nfc-btn    { background: #0369a1; }
+
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Loading Animation */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .loading-spinner {
+      width: 120px;
+      height: 120px;
+      position: relative;
+    }
+
+    .loading-spinner::before,
+    .loading-spinner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 4px solid transparent;
+    }
+
+    .loading-spinner::before {
+      border-top-color: var(--accent-color);
+      animation: spin 1.5s linear infinite;
+    }
+
+    .loading-spinner::after {
+      border-left-color: var(--accent-color);
+      animation: spin 1s linear infinite;
+    }
+
+    .loading-text {
+      margin-top: 30px;
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      color: var(--accent-color);
+      letter-spacing: 2px;
+    }
+
+    /* Background particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background-color: rgba(10, 10, 35, 0.4);
+    }
+    
+    /* Sound Wave Effects */
+    .sound-waves {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .wave {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(132, 204, 255, 0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 
+        0 0 25px rgba(147, 197, 253, 0.5),
+        0 0 15px rgba(255, 255, 255, 0.3) inset;
+      opacity: 0;
+      transform: scale(0);
+      animation: pulse-wave 3s infinite linear;
+    }
+    
+    .wave-1 {
+      left: 18%;
+      top: 48%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 0s;
+    }
+    
+    .wave-2 {
+      right: 18%;
+      top: 48%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 0.5s;
+    }
+    
+    .wave-3 {
+      left: 18%;
+      top: 48%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 1s;
+    }
+    
+    .wave-4 {
+      right: 18%;
+      top: 48%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 1.5s;
+    }
+    
+    .wave-5 {
+      left: 18%;
+      top: 48%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 2s;
+    }
+    
+    .wave-6 {
+      right: 18%;
+      top: 48%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 2.5s;
+    }
+    
+    .wave-7 {
+      left: 18%;
+      top: 48%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 1.2s;
+    }
+    
+    .wave-8 {
+      right: 18%;
+      top: 48%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 0.2s;
+    }
+    
+    @keyframes pulse-wave {
+      0% {
+        transform: scale(0);
+        opacity: 0.9;
+        background: rgba(132, 204, 255, 0.7);
+      }
+      50% {
+        opacity: 0.5;
+        background: rgba(132, 204, 255, 0.4);
+      }
+      100% {
+        transform: scale(5);
+        opacity: 0;
+        background: rgba(132, 204, 255, 0.1);
+      }
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float 20s linear infinite;
+    }
+
+    /* Animations */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes presentEffect {
+      0% { transform: translateX(0) scale(1); }
+      8% { transform: translateX(-40px) scale(1.03); }
+      16% { transform: translateX(40px) scale(1.06); }
+      24% { transform: translateX(-40px) scale(1.09); }
+      32% { transform: translateX(0) scale(1.12); }
+      40% { transform: translateY(-10px) scale(1.12); }
+      60% { transform: translateY(-10px) scale(1.12); }
+      68% { transform: translateX(-40px) scale(1.09); }
+      76% { transform: translateX(40px) scale(1.06); }
+      84% { transform: translateX(-40px) scale(1.03); }
+      100% { transform: translateX(0) scale(1); }
+    }
+
+    /* Footer with Photo and Website Button */
+    .footer-container {
+      position: fixed;
+      bottom: 40px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      z-index: 100;
+    }
+    
+    .profile-photo-container {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--accent-color);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .profile-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: rotate(90deg);
+    }
+    
+    .website-button {
+      background: var(--red-button);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 15px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      letter-spacing: 0.5px;
+      transform: translateY(0);
+    }
+    
+    .website-button:hover {
+      background: var(--red-button-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+    }
+    
+    .website-button i {
+      font-size: 1.3rem;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 992px) {
+      #container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .card-container {
+        width: 100%;
+        max-width: 450px;
+        height: auto;
+        aspect-ratio: 4/5;
+      }
+      
+      #agent-card {
+        width: 100%;
+        max-width: 460px;
+        height: 550px;
+        transform: translateY(0);
+      }
+      
+      .website-button {
+        font-size: 1rem;
+        padding: 12px 25px;
+      }
+      
+      .footer-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .profile-photo-container {
+        width: 110px;
+        height: 110px;
+      }
+    }
+    }
+
+    @media (max-width: 576px) {
+      #questions {
+        grid-template-columns: 1fr;
+      }
+      
+      .control-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .agent-details h3 {
+        font-size: 18px;
+      }
+      
+      .avatar-img {
+        width: 46px;
+        height: 46px;
+      }
+      
+      .card-header {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading Animation -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">INITIALIZING AGENT LEE</div>
+  </div>
+  
+  <!-- Background particles -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- Sound wave animation elements -->
+  <div class="sound-waves">
+    <div class="wave wave-1"></div>
+    <div class="wave wave-2"></div>
+    <div class="wave wave-3"></div>
+    <div class="wave wave-4"></div>
+    <div class="wave wave-5"></div>
+    <div class="wave wave-6"></div>
+    <div class="wave wave-7"></div>
+    <div class="wave wave-8"></div>
+  </div>
+
+  <div id="container" role="region" aria-live="polite" aria-label="Business card with Agent Lee AI Assistant">
+    <!-- Business card image with 3D effect -->
+    <div class="card-container">
+      <img id="business-card-img" src="digitalcard2.png" alt="Digital Business Card">
+      <div class="card-shine"></div>
+    </div>
+
+    <!-- Agent Lee Assistant card floating on top -->
+    <div id="agent-card" tabindex="0" aria-label="Agent Lee AI Assistant" role="region" aria-live="polite">
+      <div class="card-header" id="drag-handle" aria-label="Agent Lee header, draggable">
+        <img src="resourseagent.png" alt="Agent Lee Avatar" class="avatar-img">
+        <div class="agent-details">
+          <h3>Agent Lee</h3>
+          <p><span class="status-indicator"></span>AI Guide Active</p>
+        </div>
+      </div>
+
+      <div id="questions" role="list" aria-label="Frequently asked questions">
+        <button class="question-btn" role="listitem" data-question="Who is Leonard J. Lee?">
+          <i class="fas fa-user-circle"></i> Who is Leonard J. Lee?
+        </button>
+        <button class="question-btn" role="listitem" data-question="Why did Leonard create Rapid Web Development?">
+          <i class="fas fa-question-circle"></i> Why create Rapid Web Development?
+        </button>
+        <button class="question-btn" role="listitem" data-question="What makes Leonard different?">
+          <i class="fas fa-fingerprint"></i> What makes Leonard different?
+        </button>
+        <button class="question-btn" role="listitem" data-question="What is Rapid Web Development?">
+          <i class="fas fa-laptop-code"></i> What is Rapid Web Development?
+        </button>
+        <button class="question-btn" role="listitem" data-question="What is the LEEWAY movement?">
+          <i class="fas fa-fist-raised"></i> What is the LEEWAY movement?
+        </button>
+        <button class="question-btn" role="listitem" data-question="Why is artist empowerment important?">
+          <i class="fas fa-music"></i> Why is artist empowerment important?
+        </button>
+        <button class="question-btn" role="listitem" data-question="How is this different from Shopify?">
+          <i class="fas fa-store"></i> How is this different from Shopify?
+        </button>
+        <button class="question-btn" role="listitem" data-question="What happens when I join Rapid Web Development?">
+          <i class="fas fa-handshake"></i> What happens when I join?
+        </button>
+      </div>
+
+      <div class="control-row" aria-label="Agent Lee controls">
+        <button class="stop-btn" id="stop-btn" disabled><i class="fas fa-stop-circle"></i> Stop</button>
+        <button class="finish-btn" id="finish-btn"><i class="fas fa-check-circle"></i> Finish</button>
+        <button class="save-btn" id="save-btn"><i class="fas fa-save"></i> Save Contact</button>
+        <button class="email-btn" id="email-btn"><i class="fas fa-envelope"></i> Email</button>
+      </div>
+      <div class="control-row" aria-label="Contact buttons" style="border-top:none; padding-top:0;">
+        <button class="phone-btn" id="phone-btn"><i class="fas fa-phone"></i> Phone</button>
+        <button class="text-btn" id="text-btn"><i class="fas fa-comment"></i> Text</button>
+        <button class="nearby-btn" id="nearby-btn"><i class="fas fa-share-alt"></i> Nearby Share</button>
+        <button class="nfc-btn" id="nfc-btn"><i class="fas fa-wifi"></i> NFC Tag</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer with Photo and Website Button -->
+  <div class="footer-container">
+    <div class="profile-photo-container">
+      <img src="5hownisdma.jpg" alt="Leonard J. Lee" class="profile-photo">
+    </div>
+    <a href="https://rapidwebdevelop.com" id="website-button" class="website-button">
+      <i class="fas fa-globe"></i> VISIT RAPIDWEBDEVELOP.COM
+    </a>
+  </div>
+
+  <script>
+    // Create background particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random position, size and animation delay
+        const size = Math.random() * 3 + 1;
+        const posX = Math.random() * window.innerWidth;
+        const posY = Math.random() * window.innerHeight;
+        const delay = Math.random() * 20;
+        const duration = Math.random() * 10 + 15;
+        const opacity = Math.random() * 0.5 + 0.2;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}px`;
+        particle.style.top = `${posY}px`;
+        particle.style.opacity = opacity;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Loading animation
+    window.addEventListener('load', function() {
+      createParticles();
+      
+      setTimeout(() => {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        loadingOverlay.style.opacity = '0';
+        loadingOverlay.style.transition = 'opacity 0.8s ease';
+        setTimeout(() => {
+          loadingOverlay.style.display = 'none';
+        }, 800);
+      }, 1500);
+      
+      // Add hover animation for business card
+      const card = document.querySelector('.card-container');
+      
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateY = ((x - centerX) / centerX) * 10;
+        const rotateX = ((centerY - y) / centerY) * 10;
+        
+        document.querySelector('#business-card-img').style.transform = 
+          `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        document.querySelector('#business-card-img').style.transform = 
+          'rotateY(0deg) rotateX(0deg)';
+      });
+    });
+
+    // Drag floating card logic
+    const card = document.getElementById('agent-card');
+    const handle = document.getElementById('drag-handle');
+    let dragging = false, dx = 0, dy = 0;
+
+    handle.addEventListener('mousedown', e => {
+      dragging = true;
+      const rect = card.getBoundingClientRect();
+      dx = e.clientX - rect.left;
+      dy = e.clientY - rect.top;
+      handle.style.cursor = 'grabbing';
+      card.classList.add('dragging');
+    });
+    
+    document.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      card.style.left = (e.clientX - dx) + 'px';
+      card.style.top = (e.clientY - dy) + 'px';
+      card.style.position = 'fixed';
+    });
+    
+    document.addEventListener('mouseup', () => {
+      dragging = false;
+      handle.style.cursor = 'grab';
+      card.classList.remove('dragging');
+    });
+
+    // Speech and Q&A
+    const questions = document.querySelectorAll('.question-btn');
+
+    const answers = {
+      "who is leonard j. lee?":
+        "Ah, now that's a story worth telling. Leonard J. Lee is more than a founder — he's what I call a vibe coder. He created me and this platform to help artists stop waiting for permission and start building their future.",
+      "why did leonard create rapid web development?":
+        "Because he saw too many gifted artists getting locked out of the industry they power. Leonard wanted to build a weapon of mass ownership disguised as a website.",
+      "what makes leonard different?":
+        "Most devs write scripts. Leonard writes scriptures. He listens to artists before writing a single line. Everything he builds speaks with you, not at you.",
+      "what is rapid web development?":
+        "It's about speed, freedom, and full ownership. Launch a platform in a day — merch, music, video, fan messaging, NFTs — all in one file, no middlemen.",
+      "what is the leeway movement?":
+        "LEEWAY is not a tool; it's a territory, a belief system wrapped in code. Full control over your art, merch, message, and mission.",
+      "why is artist empowerment important?":
+        "Because the industry is still rigged with 360 deals, low streaming payouts, contract traps. Artist empowerment means taking your future back.",
+      "how is this different from shopify?":
+        "Those are boxes. We are blueprints. Templates with purpose, embedding AI, merch, music players, voice control, email marketing, and community tools.",
+      "what happens when i join rapid web development?":
+        "You get a site, but more than that: a system, community, cause, and me—Agent Lee—guiding you every step. You take keys to your own kingdom."
+    };
+
+    questions.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const q = btn.getAttribute('data-question');
+        // Speak answer only, no visible chat display
+        const ans = answers[q.toLowerCase()] || "Sorry, I don't have an answer for that yet.";
+        speak(ans);
+        
+        // Add active state to clicked button
+        questions.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    function speak(text) {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+
+      // Get available voices
+      let voices = window.speechSynthesis.getVoices();
+      
+      // If voices array is empty, try with onvoiceschanged event
+      if (voices.length === 0) {
+        window.speechSynthesis.onvoiceschanged = () => {
+          voices = window.speechSynthesis.getVoices();
+          setVoice();
+        };
+      } else {
+        setVoice();
+      }
+      
+      function setVoice() {
+        // Try to find specific premium voices in order of preference
+        const preferredVoices = [
+          // Microsoft voices
+          'Microsoft David', 
+          'Microsoft Mark',
+          'Microsoft David Desktop',
+          
+          // Google voices
+          'Google US English',
+          'Google UK English Male',
+          
+          // Other premium voices
+          'Daniel',
+          'Alex',
+          'Tom',
+          
+          // Fallbacks - female voices
+          'Samantha',
+          'Microsoft Zira',
+          'Google US English Female'
+        ];
+        
+        // Find the first preferred voice that is available
+        let selectedVoice = null;
+        for (const voiceName of preferredVoices) {
+          const voice = voices.find(v => 
+            v.name.includes(voiceName) || 
+            v.voiceURI.includes(voiceName)
+          );
+          
+          if (voice) {
+            selectedVoice = voice;
+            break;
+          }
+        }
+        
+        // If none of the preferred voices are found, use any male English voice
+        if (!selectedVoice) {
+          selectedVoice = voices.find(v => 
+            v.lang.startsWith('en') && 
+            (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('david'))
+          );
+        }
+        
+        // If still no voice, fall back to any English voice
+        if (!selectedVoice) {
+          selectedVoice = voices.find(v => v.lang.startsWith('en'));
+        }
+        
+        // Set the selected voice
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+          console.log('Using voice:', selectedVoice.name);
+        }
+        
+        // Adjust speech parameters
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        
+        // Speak the text
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // Contact buttons
+    document.getElementById('email-btn').onclick = () => {
+      window.location.href = 'mailto:agentlee@rapidwebdevelop.com';
+    };
+    document.getElementById('phone-btn').onclick = () => {
+      // Directly initiate a phone call to the number
+      window.location.href = 'tel:4146269992';
+    };
+    document.getElementById('text-btn').onclick = () => {
+      // Directly open SMS with the number pre-filled
+      window.location.href = 'sms:4146269992?body=Hello%20Leonard%2C%20I%20saw%20your%20digital%20business%20card.';
+    };
+    document.getElementById('save-btn').onclick = () => {
+      const vcard = [
+        'BEGIN:VCARD','VERSION:3.0',
+        'FN:Lee','ORG:RapidWebDevelop','TITLE:Artist Empowerment Platform',
+        'TEL;WORK;VOICE:414-626-9992','EMAIL;WORK:agentlee@rapidwebdevelop.com',
+        'ADR;WORK:;;Milwaukee, WI 53206','URL:https://rapidwebdevelop.com','END:VCARD'
+      ].join('\n');
+      const blob = new Blob([vcard], {type: 'text/vcard'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'AgentLee.vcf'; a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    // Stop / Finish buttons logic
+    const stopBtn = document.getElementById('stop-btn');
+    const finishBtn = document.getElementById('finish-btn');
+    stopBtn.onclick = () => {
+      window.speechSynthesis.cancel();
+      stopBtn.disabled = true;
+    };
+    finishBtn.onclick = () => {
+      speak("Okay, I'm here if you need me.");
+    };
+
+    // Business card interactive presentation effect
+    const businessCard = document.getElementById('business-card-img');
+    businessCard.addEventListener('click', () => {
+      businessCard.style.animation = 'presentEffect 6s ease-in-out';
+      setTimeout(() => {
+        businessCard.style.animation = '';
+      }, 6000);
+    });
+    
+    // Nearby Share functionality
+    document.getElementById('nearby-btn').onclick = async () => {
+      if (!('share' in navigator)) {
+        alert('Sharing is not supported on this browser');
+        return;
+      }
+      
+      try {
+        // Create vCard file for sharing
+        const vcard = [
+          'BEGIN:VCARD','VERSION:3.0',
+          'FN:Leonard J. Lee','ORG:RapidWebDevelop','TITLE:Artist Empowerment Platform',
+          'TEL;WORK;VOICE:414-626-9992','EMAIL;WORK:agentlee@rapidwebdevelop.com',
+          'ADR;WORK:;;Milwaukee, WI 53206','URL:https://rapidwebdevelop.com','END:VCARD'
+        ].join('\n');
+        const vcardBlob = new Blob([vcard], {type: 'text/vcard'});
+        const file = new File([vcardBlob], 'LeonardLee.vcf', {type: 'text/vcard'});
+        
+        // Share options
+        const shareData = {
+          title: 'Leonard Lee - Artist Empowerment',
+          text: 'Connect with Leonard J. Lee from RapidWebDevelop for artist empowerment solutions.',
+          url: 'https://rapidwebdevelop.com',
+          files: [file]
+        };
+        
+        // Check if file sharing is supported
+        if (navigator.canShare && navigator.canShare(shareData)) {
+          await navigator.share(shareData);
+          alert('Contact shared successfully');
+        } else {
+          // Fallback to basic sharing without files
+          await navigator.share({
+            title: shareData.title,
+            text: shareData.text,
+            url: shareData.url
+          });
+          alert('Website link shared (contact sharing not supported)');
+        }
+      } catch (e) {
+        console.error('Sharing failed:', e);
+      }
+    };
+    
+    // NFC Tag functionality
+    document.getElementById('nfc-btn').onclick = () => {
+      const options = [
+        'https://rapidwebdevelop.com',
+        'tel:4146269992',
+        'mailto:agentlee@rapidwebdevelop.com',
+        'MECARD:N:Leonard J. Lee;TEL:4146269992;EMAIL:agentlee@rapidwebdevelop.com;URL:https://rapidwebdevelop.com;'
+      ];
+      
+      const nfcContent = options[0]; // Default to website URL
+      
+      // Copy to clipboard for NFC writing apps
+      navigator.clipboard.writeText(nfcContent).then(() => {
+        alert('NFC payload copied to clipboard! Use in your NFC writing app');
+      }).catch(() => {
+        alert('Failed to copy NFC payload');
+      });
+    };
+  </script>
+=======
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Artist Empowerment Platform with Digital Business Card + Agent Lee</title>
+<meta name="theme-color" content="#6366f1" />
+<meta name="description" content="Digital business card and Agent Lee assistant for Leonard J. Lee, Founder of RapidWebDevelop" />
+<link rel="manifest" href="manifest.json" />
+<style>
+  html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #f0e6d2;
+    background: url('1tof8i87kg.png') no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+    user-select: none;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.6);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .container {
+    height: 100vh;
+    width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .flip-notice {
+    position: absolute;
+    top: 24px; left: 50%;
+    transform: translateX(-50%);
+    background: rgba(40, 40, 60, 0.98);
+    color: #fff;
+    padding: 13px 32px;
+    border-radius: 24px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    z-index: 3;
+    box-shadow: 0 0 25px #4f57e7bb;
+    border: 3px solid #6366f1;
+    user-select: none;
+    pointer-events: none;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.83; }
+    50% { opacity: 1; }
+    100% { opacity: 0.83; }
+  }
+  .flip-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Card covers 1/3 of the screen width, nearly full height */
+    width: 33vw;
+    height: 94vh;
+    min-width: 300px;
+    max-width: 420px;
+    max-height: 99vh;
+    min-height: 440px;
+    background: none;
+    position: relative;
+    perspective: 1800px;
+    outline: 0;
+    user-select: none;
+    margin: 0 auto;
+    border-radius: 0;
+    box-shadow: none;
+    transition: none;
+  }
+  .flip-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.9s cubic-bezier(.4,0,.2,1);
+    transform-style: preserve-3d;
+    cursor: pointer;
+    border-radius: 0;
+  }
+  .flipped .flip-card { transform: rotateY(180deg); }
+
+  .flip-side {
+    position: absolute;
+    width: 100%; height: 100%;
+    left: 0; top: 0;
+    backface-visibility: hidden;
+    user-select: none;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    background: none;
+    padding: 0;
+    margin: 0;
+  }
+  .flip-side.front {
+    background: none;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .flip-side.front img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;   /* Always show full card, never crop */
+    object-position: center center;
+    user-select: none;
+    display: block;
+    border-radius: 0;
+    box-shadow: none;
+    outline: 0;
+    background: none;
+    margin: 0;
+    padding: 0;
+  }
+  .flip-side.back {
+    background: linear-gradient(120deg, #1e293bbb 5%, #6366f1cc 100%);
+    color: #e0e7ff;
+    transform: rotateY(180deg);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 0;
+  }
+  .agent-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 0 auto 10px auto;
+    justify-content: center;
+    padding: 38px 0 0 0;
+    user-select:none;
+  }
+  .agent-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid #6366f1;
+    box-shadow: 0 0 8px #6366f1, 0 2px 6px #0007;
+    object-fit: cover;
+  }
+  .agent-name {
+    font-size: 2.1rem;
+    font-weight: 900;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #6366f1 0%, #d946ef 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    user-select:none;
+    letter-spacing: 0.5px;
+  }
+  .agent-role {
+    color: #cec5ee;
+    font-size: 1rem;
+    margin-top: -5px;
+    font-weight: 400;
+  }
+  .agent-content-wrap {
+    flex: 1 1 auto;
+    width: 92%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .agent-chat-output {
+    flex-grow: 0;
+    background: #334155cc;
+    border-radius: 12px;
+    padding: 10px 12px 8px 12px;
+    font-size: 1rem;
+    overflow-y: auto;
+    margin: 0 0 13px 0;
+    color: #ffe9fa;
+    width: 100%;
+    min-height: 28px;
+    max-height: 54px;
+    font-weight: 500;
+    text-shadow: 0 1px 4px #31285702;
+    box-shadow: 0 2px 17px #6366f117;
+  }
+  .agent-chat-output p { margin-bottom: 0; user-select: none; }
+  .agent-questions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 11px;
+    margin-bottom: 13px;
+    width: 100%;
+  }
+  .agent-questions button {
+    background: linear-gradient(120deg, #334155 70%, #6366f1cc 100%);
+    border: none;
+    padding: 10px 5px;
+    border-radius: 12px;
+    color: #e3e5ff;
+    font-weight: 700;
+    cursor: pointer;
+    user-select:none;
+    font-size: 1.05rem;
+    transition: background-color 0.3s, color 0.3s;
+    word-break: break-word;
+  }
+  .agent-questions button:hover,
+  .agent-questions button:focus {
+    background: #6366f1;
+    color: #e0e7ff;
+    outline: 0;
+  }
+  .agent-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 2px;
+    margin-bottom: 11px;
+    width: 100%;
+  }
+  .agent-controls button, .agent-controls a {
+    background: linear-gradient(120deg, #475569 85%, #8b5cf6bb 100%);
+    border: none;
+    padding: 10px 11px;
+    border-radius: 11px;
+    color: #e9d4fe;
+    font-weight: 700;
+    cursor: pointer;
+    user-select:none;
+    flex: 1 1 120px;
+    font-size: 0.98rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    min-width: 98px;
+  }
+  .agent-controls button:hover,
+  .agent-controls button:focus,
+  .agent-controls a:hover,
+  .agent-controls a:focus {
+    background: #6366f1;
+    color: #fff;
+    outline: 0;
+  }
+  #qrCode {
+    margin-top: 7px;
+    align-self: center;
+    width: 112px;
+    height: 112px;
+  }
+  @media (max-width: 1000px) {
+    .flip-container {
+      width: 42vw;
+      height: 91vh;
+      max-width: 98vw;
+      min-width: 220px;
+      min-height: 66vw;
+    }
+  }
+  @media (max-width: 800px) {
+    .flip-container { width: 62vw; height: 88vh; }
+    .agent-header { padding-top: 15px; }
+    .agent-content-wrap { width: 97%; }
+  }
+  @media (max-width: 500px) {
+    .flip-container { width: 96vw; min-width: 95vw; max-width: 99vw; height: 93vh; min-height: 70vw; }
+    .flip-side { border-radius: 0; }
+    .agent-header { padding-top: 9px; }
+    .agent-content-wrap { width: 99%; }
+    .agent-controls button, .agent-controls a { flex: 1 1 99vw; padding: 8px 6px; }
+    .agent-questions button { font-size: 0.99rem; padding: 8px 5px; }
+    #qrCode { width:80px; height:80px; }
+  }
+</style>
+</head>
+<body>
+<div class="container" role="main" aria-label="Artist Empowerment Platform">
+  <div class="flip-notice">Tap card to flip</div>
+  <div tabindex="0" class="flip-container" id="flipContainer" aria-pressed="false" role="button" aria-label="Flip business card to Agent Lee assistant">
+    <div class="flip-card" id="flipCard">
+
+      <!-- Front side: business card image -->
+      <div class="flip-side front" aria-hidden="false">
+        <img src="digitalcard2.png" alt="Digital Business Card Front" />
+      </div>
+
+      <!-- Back side: Agent Lee AI assistant -->
+      <div class="flip-side back" aria-hidden="true" role="region" aria-label="Agent Lee assistant card">
+        <div class="agent-header">
+          <img src="resourseagent.png" alt="Agent Lee Avatar" class="agent-avatar" />
+          <div>
+            <div class="agent-name">Agent Lee</div>
+            <div class="agent-role">Your AI Guide</div>
+          </div>
+        </div>
+        <div class="agent-content-wrap">
+          <div class="agent-chat-output" id="agentChat" aria-live="polite" aria-atomic="false">
+            <p>Click a question to hear Agent Lee speak.</p>
+          </div>
+          <div class="agent-questions" role="list" aria-label="Agent Lee questions">
+            <button role="listitem" type="button" data-question="who is leonard j. lee?">Who is Leonard J. Lee?</button>
+            <button role="listitem" type="button" data-question="why did leonard create rapid web development?">Why did Leonard create Rapid Web Development?</button>
+            <button role="listitem" type="button" data-question="what makes leonard different?">What makes Leonard different?</button>
+            <button role="listitem" type="button" data-question="what is rapid web development?">What is Rapid Web Development?</button>
+            <button role="listitem" type="button" data-question="what is the leeway movement?">What is the LEEWAY movement?</button>
+            <button role="listitem" type="button" data-question="why is artist empowerment important?">Why is artist empowerment important?</button>
+            <button role="listitem" type="button" data-question="how is this different from shopify?">How is this different from Shopify?</button>
+            <button role="listitem" type="button" data-question="what happens when i join rapid web development?">What happens when I join Rapid Web Development?</button>
+          </div>
+          <div class="agent-controls" role="region" aria-label="Agent Lee controls">
+            <button type="button" id="listenBtn" aria-label="Listen to Agent Lee">🎤 Listen</button>
+            <button type="button" id="stopBtn" aria-label="Stop Agent Lee Speech" disabled>⏹️ Stop</button>
+            <button type="button" id="finishBtn" aria-label="Finish Interaction">✅ Finish</button>
+            <a href="#" id="saveBtn" download="AgentLee.vcf" class="button" aria-label="Save Contact">💾 Save Contact</a>
+            <button type="button" id="emailBtn" aria-label="Send Email to Agent Lee">📧 Email</button>
+            <button type="button" id="phoneBtn" aria-label="Call Agent Lee">📱 Phone</button>
+            <button type="button" id="textBtn" aria-label="Text Agent Lee">💬 Text</button>
+          </div>
+          <div id="qrCode" aria-label="QR code linking to Leonard's website or contact"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.min.js"></script>
+<script>
+  // Manual flip logic: click on container flips, click again unflips
+  const flipContainer = document.getElementById('flipContainer');
+  let isFlipped = false;
+  flipContainer.addEventListener('click', function(e) {
+    // Only flip if not clicking a button or interactive element inside the back
+    if (
+      e.target.closest('.agent-questions') ||
+      e.target.closest('.agent-controls') ||
+      e.target.closest('a') ||
+      e.target.closest('button')
+    ) return;
+    isFlipped = !isFlipped;
+    flipContainer.classList.toggle('flipped', isFlipped);
+  });
+
+  // Agent Lee answers
+  const answers = {
+    "who is leonard j. lee?": "Ah, now that's a story worth telling. Leonard J. Lee is more than a founder — he’s what I call a vibe coder. He created me and this platform to help artists stop waiting for permission and start building their future.",
+    "why did leonard create rapid web development?": "Because he saw too many gifted artists getting locked out of the industry they power. Leonard wanted to build a weapon of mass ownership disguised as a website.",
+    "what makes leonard different?": "Most devs write scripts. Leonard writes scriptures. He listens to artists before writing a single line. Everything he builds speaks with you, not at you.",
+    "what is rapid web development?": "It’s about speed, freedom, and full ownership. Launch a platform in a day — merch, music, video, fan messaging, NFTs — all in one file, no middlemen.",
+    "what is the leeway movement?": "LEEWAY is not a tool; it’s a territory, a belief system wrapped in code. Full control over your art, merch, message, and mission.",
+    "why is artist empowerment important?": "Because the industry is still rigged with 360 deals, low streaming payouts, contract traps. Artist empowerment means taking your future back.",
+    "how is this different from shopify?": "Those are boxes. We are blueprints. Templates with purpose, embedding AI, merch, music players, voice control, email marketing, and community tools.",
+    "what happens when i join rapid web development?": "You get a site, but more than that: a system, community, cause, and me—Agent Lee—guiding you every step. You take keys to your own kingdom."
+  };
+
+  const chatOutput = document.getElementById('agentChat');
+  const buttons = document.querySelectorAll('.agent-questions button');
+  const listenBtn = document.getElementById('listenBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const finishBtn = document.getElementById('finishBtn');
+  const saveBtn = document.getElementById('saveBtn');
+  const emailBtn = document.getElementById('emailBtn');
+  const phoneBtn = document.getElementById('phoneBtn');
+  const textBtn = document.getElementById('textBtn');
+
+  function speak(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function addMessage(text) {
+    chatOutput.innerHTML = `<p>${text}</p>`;
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const q = btn.getAttribute('data-question').toLowerCase();
+      const answer = answers[q] || "Sorry, I don't have an answer for that.";
+      addMessage(answer);
+      speak(answer);
+    });
+  });
+
+  listenBtn.onclick = () => {
+    speak("Hello! I am Agent Lee. Ask me a question by clicking a button.");
+    addMessage("Hello! I am Agent Lee. Ask me a question by clicking a button.");
+  };
+  stopBtn.onclick = () => {
+    window.speechSynthesis.cancel();
+  };
+  finishBtn.onclick = () => {
+    speak("Okay, I'm here when you need me.");
+    addMessage("Okay, I'm here when you need me.");
+  };
+  saveBtn.onclick = () => {
+    const vcard = [
+      'BEGIN:VCARD', 'VERSION:3.0',
+      'FN:Leonard J. Lee', 'ORG:RapidWebDevelop', 'TITLE:Artist Empowerment Platform',
+      'TEL;WORK;VOICE:414-626-9992', 'EMAIL;WORK:agentlee@rapidwebdevelop.com',
+      'ADR;WORK:;;Milwaukee, WI 53206', 'URL:https://rapidwebdevelop.com', 'END:VCARD'
+    ].join('\n');
+    const blob = new Blob([vcard], {type: 'text/vcard'});
+    const url = URL.createObjectURL(blob);
+    saveBtn.href = url;
+  };
+  emailBtn.onclick = () => {
+    window.location.href = 'mailto:agentlee@rapidwebdevelop.com';
+  };
+  phoneBtn.onclick = () => {
+    window.location.href = 'tel:4146269992';
+  };
+  textBtn.onclick = () => {
+    window.location.href = 'sms:4146269992';
+  };
+
+  // QR Code generation
+  const qr = qrcode(0, 'M');
+  const profileURL = 'https://rapidwebdevelop.com';
+  qr.addData(profileURL);
+  qr.make();
+  document.getElementById('qrCode').innerHTML = qr.createSvgTag();
+
+  // Service Worker for offline PWA
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(() => {
+      console.log('Service Worker Registered');
+    });
+  }
+
+  // Nearby Share & NFC features remain as before...
+  const nearbyBtn = document.createElement('button');
+  nearbyBtn.textContent = '📡 Nearby Share';
+  nearbyBtn.style.cssText = `
+    background:#475569; border:none; padding:12px 18px; border-radius:16px; color:#cbd5e1;
+    font-weight:600; cursor:pointer; flex: 1 1 140px; font-size: 1rem; text-align:center; transition:background-color 0.3s ease; margin-top:8px;
+  `;
+  nearbyBtn.onmouseenter = () => nearbyBtn.style.background = '#2563eb';
+  nearbyBtn.onmouseleave = () => nearbyBtn.style.background = '#475569';
+  document.querySelector('.agent-controls').appendChild(nearbyBtn);
+
+  nearbyBtn.onclick = async () => {
+    if (!('canShare' in navigator)) {
+      alert('Nearby Share is not supported on this browser.');
+      return;
+    }
+    try {
+      const vcardBlob = new Blob([[
+        'BEGIN:VCARD', 'VERSION:3.0',
+        'FN:Leonard J. Lee', 'ORG:RapidWebDevelop', 'TITLE:Artist Empowerment Platform',
+        'TEL;WORK;VOICE:414-626-9992', 'EMAIL;WORK:agentlee@rapidwebdevelop.com',
+        'ADR;WORK:;;Milwaukee, WI 53206', 'URL:https://rapidwebdevelop.com', 'END:VCARD'
+      ].join('\n')], { type: 'text/vcard' });
+      const file = new File([vcardBlob], 'AgentLee.vcf', { type: 'text/vcard' });
+      await navigator.share({
+        title: 'Contact: Leonard J. Lee',
+        text: 'Here is my digital business card!',
+        files: [file]
+      });
+    } catch (e) {
+      alert('Sharing failed or cancelled: ' + e);
+    }
+  };
+
+  const nfcBtn = document.createElement('button');
+  nfcBtn.textContent = '📳 Generate NFC Payload';
+  nfcBtn.style.cssText = `
+    background:#475569; border:none; padding:12px 18px; border-radius:16px; color:#cbd5e1;
+    font-weight:600; cursor:pointer; flex: 1 1 140px; font-size: 1rem; text-align:center; transition:background-color 0.3s ease; margin-top:8px;
+  `;
+  nfcBtn.onmouseenter = () => nfcBtn.style.background = '#2563eb';
+  nfcBtn.onmouseleave = () => nfcBtn.style.background = '#475569';
+  document.querySelector('.agent-controls').appendChild(nfcBtn);
+
+  nfcBtn.onclick = () => {
+    const payloadText = profileURL;
+    navigator.clipboard.writeText(payloadText).then(() => {
+      alert('NFC payload URL copied to clipboard. Paste it into your NFC writing app.');
+    }).catch(() => {
+      alert('Failed to copy NFC payload URL.');
+    });
+  };
+
+</script>
+>>>>>>> 3ad9b8182c74274a1414cd28f844ecec8db4e4d0
+</body>
+</html>
